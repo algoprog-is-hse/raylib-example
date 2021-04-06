@@ -27,7 +27,12 @@ conan_cmake_run(
   ENV CONAN_CMAKE_PROGRAM="${CMAKE_COMMAND}" ${ENV}
   )
 
+add_subdirectory(raylib-cpp EXCLUDE_FROM_ALL)
 enable_testing()
 add_subdirectory(external/doctest)
 include(external/doctest/doctest.cmake)
 add_subdirectory(src)
+
+# Так как VSCode любит при запуске неправильно указывать текущий каталог,
+# мы создаём ссылку на каталог resources рядом с исполняемыми файлами
+file(CREATE_LINK "${CMAKE_CURRENT_SOURCE_DIR}/resources" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources" COPY_ON_ERROR SYMBOLIC)
